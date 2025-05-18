@@ -112,8 +112,7 @@ const ContactSection: React.FC = () => {
                     <Phone className="h-6 w-6 text-green-100" />
                   </div>
                   <div>
-                    <h3 className="text-lg font-semibold mb-2">Phone</h3>
-                    <p className="text-green-100">+44 20 1234 5678</p>
+                
                     <p className="text-green-100">Mon-Fri, 9AM-5PM GMT</p>
                   </div>
                 </div>

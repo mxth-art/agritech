@@ -4,7 +4,6 @@ import AboutSection from '../components/AboutSection';
 import TechnologySection from '../components/TechnologySection';
 import ImpactSection from '../components/ImpactSection';
 import ImplementationSection from '../components/ImplementationSection';
-import EconomicsSection from '../components/EconomicsSection';
 import PartnershipsSection from '../components/PartnershipsSection';
 import SDGAlignmentSection from '../components/SDGAlignmentSection';
 import NewsSection from '../components/NewsSection';
@@ -31,7 +30,7 @@ const HomePage: React.FC = () => {
       <TechnologySection />
       <ImpactSection />
       <ImplementationSection />
-      <EconomicsSection />
+
       <PartnershipsSection />
       <SDGAlignmentSection />
       <NewsSection />

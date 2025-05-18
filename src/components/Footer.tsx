@@ -74,10 +74,7 @@ const Footer: React.FC = () => {
                 <MapPin size={20} className="mr-2 mt-1 text-green-400" />
                 <span>123 Sustainability Road, London, UK EC1A 1BB</span>
               </li>
-              <li className="flex items-center">
-                <Phone size={20} className="mr-2 text-green-400" />
-                <span>+44 20 1234 5678</span>
-              </li>
+              
               <li className="flex items-center">
                 <Mail size={20} className="mr-2 text-green-400" />
                 <span>info@agribiofuels.com</span>
