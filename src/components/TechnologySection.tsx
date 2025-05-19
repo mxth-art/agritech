@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ArrowRight, Download, Info } from 'lucide-react';
+import { Info, Download } from 'lucide-react';
 import Button from './ui/Button';
+import catHtrVideo from '../assets/cat htr video.mp4';
 
 const TechnologySection: React.FC = () => {
   // State for the interactive 3D model (simplified for this implementation)
@@ -42,14 +43,6 @@ const TechnologySection: React.FC = () => {
     }
   ];
 
-  // Handle 3D model interaction (simplified)
-  const handleModelDrag = (e: React.MouseEvent) => {
-    setModelRotation({
-      x: modelRotation.x + e.movementY * 0.5,
-      y: modelRotation.y + e.movementX * 0.5
-    });
-  };
-
   return (
     <section id="technology" className="py-20 bg-gray-50">
       <div className="container mx-auto px-4 md:px-6">
@@ -62,10 +55,10 @@ const TechnologySection: React.FC = () => {
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center mb-16">
-          {/* Interactive 3D Model (hover to rotate) */}
-          <div className="bg-white rounded-xl shadow-lg p-4 sm:p-6 h-64 sm:h-96 flex items-center justify-center relative overflow-hidden group">
+          {/* Interactive 3D Model (updated with video) */}
+          <div className="bg-gradient-to-br from-green-100 via-blue-50 to-white rounded-2xl shadow-2xl p-4 sm:p-8 h-[30rem] sm:h-[44rem] flex items-center justify-center relative overflow-hidden group transition-all duration-300">
             <div
-              className="w-40 h-40 sm:w-64 sm:h-64 relative transition-transform duration-300"
+              className="w-full h-full relative transition-transform duration-300 rounded-2xl border-4 border-green-300 shadow-xl overflow-hidden group-hover:scale-105 group-hover:shadow-2xl"
               style={{
                 transform: `rotateX(${modelRotation.x}deg) rotateY(${modelRotation.y}deg)`,
                 transformStyle: 'preserve-3d',
@@ -75,28 +68,31 @@ const TechnologySection: React.FC = () => {
                 const rect = (e.target as HTMLDivElement).getBoundingClientRect();
                 const x = e.clientX - rect.left;
                 const y = e.clientY - rect.top;
-                // Map mouse position to rotation angles
-                const rotateY = ((x / rect.width) - 0.5) * 40; // -20deg to +20deg
-                const rotateX = ((y / rect.height) - 0.5) * -40; // +20deg to -20deg
+                const rotateY = ((x / rect.width) - 0.5) * 40;
+                const rotateX = ((y / rect.height) - 0.5) * -40;
                 setModelRotation({ x: rotateX, y: rotateY });
               }}
               onMouseLeave={() => setModelRotation({ x: 0, y: 0 })}
             >
-              {/* Simplified 3D model representation */}
-              <div className="absolute inset-0 bg-gradient-to-br from-green-500 to-blue-600 rounded-full opacity-70"
-                style={{ transform: 'translateZ(-32px)' }} />
-              <div className="absolute inset-1 sm:inset-4 bg-gradient-to-tr from-green-600 to-blue-500 rounded-full opacity-80"
-                style={{ transform: 'translateZ(-16px)' }} />
-              <div className="absolute inset-2 sm:inset-8 bg-gradient-to-r from-green-700 to-blue-400 rounded-full opacity-90"
-                style={{ transform: 'translateZ(0px)' }} />
-              <div className="absolute inset-4 sm:inset-16 bg-gradient-to-b from-green-800 to-blue-300 rounded-full"
-                style={{ transform: 'translateZ(16px)' }} />
-              <div className="absolute inset-6 sm:inset-24 bg-gradient-to-t from-green-900 to-blue-200 rounded-full"
-                style={{ transform: 'translateZ(32px)' }} />
+              <video
+                src={catHtrVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="w-full h-full object-cover rounded-2xl"
+                style={{ userSelect: 'none', pointerEvents: 'none' }}
+              />
+              {/* Overlay label/icon */}
+              <div className="absolute top-4 left-4 bg-white/80 text-green-800 px-3 py-1 rounded-full flex items-center gap-2 shadow-md text-sm font-semibold">
+                <Info size={18} className="text-green-600" />
+                CAT-HTR Facility
+              </div>
             </div>
+            {/* Hover overlay */}
             <div className="absolute inset-0 flex items-center justify-center bg-black/0 group-hover:bg-black/20 transition-colors duration-300 pointer-events-none">
-              <div className="text-white bg-black/50 px-2 py-1 sm:px-4 sm:py-2 rounded-lg text-xs sm:text-base opacity-0 group-hover:opacity-100 transition-opacity">
-                Hover to rotate
+              <div className="text-white bg-black/60 px-4 py-2 rounded-lg text-base opacity-0 group-hover:opacity-100 transition-opacity font-medium tracking-wide shadow-lg">
+                Rotate
               </div>
             </div>
           </div>
@@ -216,40 +212,34 @@ const TechnologySection: React.FC = () => {
         </div>
 
         {/* Process Flow Diagram */}
-        <div className="bg-white rounded-xl shadow-lg p-6">
-          <h3 className="text-2xl font-semibold text-gray-800 mb-6 text-center">Biomass to Fuel Conversion Process</h3>
-          <div className="relative max-w-4xl mx-auto h-64 flex items-center">
-            {/* Step boxes */}
-            <div className="flex w-full justify-between items-center relative z-10">
-              <div className="bg-green-100 rounded-lg p-4 text-center w-48">
-                <div className="bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">1</div>
-                <h4 className="font-medium text-green-800">Biomass Collection</h4>
-              </div>
-              <div className="bg-green-100 rounded-lg p-4 text-center w-48">
-                <div className="bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">2</div>
-                <h4 className="font-medium text-green-800">CAT-HTR Processing</h4>
-              </div>
-              <div className="bg-green-100 rounded-lg p-4 text-center w-48">
-                <div className="bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">3</div>
-                <h4 className="font-medium text-green-800">Refinement</h4>
-              </div>
-              <div className="bg-green-100 rounded-lg p-4 text-center w-48">
-                <div className="bg-green-700 text-white w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-2">4</div>
-                <h4 className="font-medium text-green-800">SAF & SMF Production</h4>
-              </div>
+        <div className="bg-white rounded-xl shadow-lg p-8">
+          <h3 className="text-2xl font-semibold text-gray-800 mb-10 text-center">Biomass to Fuel Conversion Process</h3>
+          <div className="flex flex-col items-center w-full">
+            <div className="flex flex-col md:flex-row items-center justify-center gap-6 w-full">
+              {[
+                { label: "Biomass Collection" },
+                { label: "CAT-HTR Processing" },
+                { label: "Refinement" },
+                { label: "SAF & SMF Production" }
+              ].map((step, idx, arr) => (
+                <div key={step.label} className="flex items-center w-full">
+                  <div className="flex flex-col items-center w-full">
+                    <div className="bg-green-600 text-white w-12 h-12 flex items-center justify-center rounded-full shadow-lg text-lg font-bold border-4 border-green-200 transition-transform duration-300 hover:scale-110">
+                      {idx + 1}
+                    </div>
+                    <div className="mt-3 text-center font-semibold text-green-900">{step.label}</div>
+                  </div>
+                  {idx < arr.length - 1 && (
+                    <div className="flex-1 flex justify-center items-center">
+                      <svg width="60" height="24" viewBox="0 0 60 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <line x1="0" y1="12" x2="50" y2="12" stroke="#22c55e" strokeWidth="3" strokeDasharray="8,6" />
+                        <polygon points="50,6 60,12 50,18" fill="#22c55e" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
-            {/* Connecting arrows */}
-            <svg className="absolute left-0 top-1/2 w-full h-8 -translate-y-1/2 z-0" height="32">
-              {/* Arrow 1 */}
-              <line x1="12.5%" y1="16" x2="29%" y2="16" stroke="#16a34a" strokeWidth="3" strokeDasharray="6,6" />
-              <polygon points="29,12 37,16 29,20" fill="#16a34a" />
-              {/* Arrow 2 */}
-              <line x1="37.5%" y1="16" x2="54%" y2="16" stroke="#16a34a" strokeWidth="3" strokeDasharray="6,6" />
-              <polygon points="54,12 62,16 54,20" fill="#16a34a" />
-              {/* Arrow 3 */}
-              <line x1="62.5%" y1="16" x2="79%" y2="16" stroke="#16a34a" strokeWidth="3" strokeDasharray="6,6" />
-              <polygon points="79,12 87,16 79,20" fill="#16a34a" />
-            </svg>
           </div>
         </div>
       </div>

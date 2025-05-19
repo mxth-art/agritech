@@ -7,25 +7,24 @@ interface IntroLoaderProps {
 }
 
 const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
-  const [progress, setProgress] = useState(0);
+  const [progress, setProgress] = useState<number>(0);
   const [textVisible, setTextVisible] = useState(false);
   const [isDone, setIsDone] = useState(false);
   const [currentNumber, setCurrentNumber] = useState(0);
   const containerRef = useRef<HTMLDivElement>(null);
+  const startTimeRef = useRef<number | null>(null); // ✅ fix
 
   useEffect(() => {
     const duration = 3000;
-    let startTime: number;
-    
+
     const animate = (timestamp: number) => {
-      if (!startTime) startTime = timestamp;
-      const elapsed = timestamp - startTime;
-      const progress = Math.min((elapsed / duration) * 100, 100);
-      
-      setProgress(progress);
-      setCurrentNumber(Math.floor(progress));
-      
-      if (progress < 100) {
+      if (startTimeRef.current === null) startTimeRef.current = timestamp;
+      const elapsed = timestamp - startTimeRef.current;
+      const nextProgress = Math.min((elapsed / duration) * 100, 100);
+      setProgress(nextProgress);
+      setCurrentNumber(Math.floor(nextProgress));
+
+      if (nextProgress < 100) {
         requestAnimationFrame(animate);
       } else {
         setTimeout(() => {
@@ -34,12 +33,12 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         }, 500);
       }
     };
-    
+
     requestAnimationFrame(animate);
-    setTimeout(() => setTextVisible(true), 500);
-    
+    const textTimer = setTimeout(() => setTextVisible(true), 500);
+
     return () => {
-      startTime = 0;
+      clearTimeout(textTimer);
     };
   }, [onComplete]);
 
@@ -64,7 +63,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
         <motion.div
           ref={containerRef}
           className="fixed inset-0 flex flex-col items-center justify-center bg-green-950 z-50 overflow-hidden"
-          exit={{ 
+          exit={{
             y: "100%",
             opacity: 0,
             transition: { duration: 1, ease: [0.65, 0, 0.35, 1] }
@@ -95,7 +94,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
             transition={{ duration: 1, ease: "easeOut" }}
             className="text-center mb-12 relative"
           >
-            <motion.h1 
+            <motion.h1
               className="text-4xl md:text-6xl font-bold text-white mb-4"
               initial={{ opacity: 0, y: 50 }}
               animate={{ opacity: 1, y: 0 }}
@@ -103,7 +102,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
             >
               Agri-BioFuels Global
             </motion.h1>
-            <motion.p 
+            <motion.p
               className="text-xl text-green-200"
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
@@ -114,7 +113,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
           </motion.div>
 
           <div className="relative">
-            <motion.div 
+            <motion.div
               className="text-8xl font-bold text-white mb-8 flex items-center justify-center"
               style={{ textShadow: "0 0 20px rgba(34, 197, 94, 0.5)" }}
             >
@@ -126,7 +125,7 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
                   initial="initial"
                   animate="animate"
                   className="inline-block mx-1"
-                  style={{ 
+                  style={{
                     textShadow: "0 0 20px rgba(34, 197, 94, 0.5)",
                     WebkitTextStroke: "2px rgba(34, 197, 94, 0.3)"
                   }}
@@ -144,13 +143,13 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               </motion.span>
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="absolute -top-10 -right-10 w-20 h-20"
-              animate={{ 
+              animate={{
                 rotate: 360,
                 scale: [1, 1.2, 1],
               }}
-              transition={{ 
+              transition={{
                 rotate: { duration: 4, repeat: Infinity, ease: "linear" },
                 scale: { duration: 2, repeat: Infinity, repeatType: "reverse" }
               }}
@@ -158,13 +157,13 @@ const IntroLoader: React.FC<IntroLoaderProps> = ({ onComplete }) => {
               <div className="w-full h-full rounded-full bg-gradient-to-r from-green-400 to-green-600 opacity-75 blur-sm" />
             </motion.div>
 
-            <motion.div 
+            <motion.div
               className="absolute -bottom-10 -left-10 w-20 h-20"
-              animate={{ 
+              animate={{
                 rotate: -360,
                 scale: [1, 1.2, 1],
               }}
-              transition={{ 
+              transition={{
                 rotate: { duration: 4, repeat: Infinity, ease: "linear" },
                 scale: { duration: 2, repeat: Infinity, repeatType: "reverse", delay: 1 }
               }}

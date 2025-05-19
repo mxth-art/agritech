@@ -172,7 +172,7 @@ const AboutSection: React.FC = () => {
             animate={inView ? { opacity: 1, x: 0 } : {}}
             transition={{ duration: 0.8, delay: 0.4 }}
           >
-            <h3 className="text-2xl font-bold text-gray-800 mb-4">Our Story</h3>
+            <h3 className="text-2xl font-bold text-gray-800 mb-4">OUR STORY</h3>
             <p className="text-gray-600 mb-6">
               Founded in 2020 by Ross James and Deependra Mehta, Agri-BioFuels Global emerged from a shared vision to transform agricultural waste into sustainable aviation fuel. Our journey began with a groundbreaking partnership with Licella, whose CAT-HTR technology formed the foundation of our innovative approach.
             </p>
@@ -190,7 +190,7 @@ const AboutSection: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-2xl font-bold text-center text-gray-800 mb-12"
           >
-            Leadership Team
+            LEADERSHIP TEAM
           </motion.h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
@@ -210,24 +210,28 @@ const AboutSection: React.FC = () => {
             ].map((person, idx) => (
               <motion.div
                 key={person.name}
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={inView ? { opacity: 1, scale: 1 } : {}}
-                transition={{ duration: 0.6, delay: 0.2 + idx * 0.2 }}
+                initial={{ opacity: 0, scale: 0.9, y: 40 }}
+                animate={inView ? { opacity: 1, scale: 1, y: 0 } : {}}
+                transition={{ duration: 0.7, delay: 0.2 + idx * 0.2, type: "spring" }}
                 className="group relative"
               >
-                <div className="relative rounded-xl overflow-hidden shadow-lg transform transition-transform duration-500 group-hover:scale-105">
+                <div className="relative rounded-2xl overflow-hidden shadow-xl border-4 border-green-400 group-hover:border-green-600 transition-all duration-500 bg-white">
                   <div className="aspect-video overflow-hidden">
                     <img
                       src={person.image}
                       alt={`${person.name} - ${person.role}`}
-                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                      className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                     />
-                  </div>
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-                  <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
-                    <h4 className="text-xl font-bold">{person.name}</h4>
-                    <p className="text-green-400 mb-2">{person.role}</p>
-                    <p className="text-sm text-gray-200">{person.bio}</p>
+                    {/* Animated overlay */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+                    {/* Animated text slide-up */}
+                    <div className="absolute bottom-0 left-0 right-0 p-6 text-white transform translate-y-8 group-hover:translate-y-0 transition-all duration-500">
+                      <h4 className="text-2xl font-bold drop-shadow">{person.name}</h4>
+                      <p className="text-green-300 mb-2 font-semibold">{person.role}</p>
+                      <p className="text-sm text-gray-100">{person.bio}</p>
+                    </div>
+                    {/* Floating effect */}
+                    <div className="absolute inset-0 pointer-events-none group-hover:animate-[float_2s_ease-in-out_infinite]" />
                   </div>
                 </div>
               </motion.div>
@@ -243,7 +247,7 @@ const AboutSection: React.FC = () => {
             transition={{ duration: 0.6 }}
             className="text-2xl font-bold text-center text-gray-800 mb-12"
           >
-            Our Values
+            OUR VALUES
           </motion.h3>
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -289,6 +293,21 @@ const AboutSection: React.FC = () => {
               <p className="text-sm text-gray-600 text-center">{stat.description}</p>
             </motion.article>
           ))}
+        </div>
+
+        {/* Contact Section */}
+        <div className="flex justify-center mt-10">
+          <motion.a
+            href="mailto:info@agribiofuels.com"
+            whileHover={{ scale: 1.06, boxShadow: "0 4px 24px 0 rgba(34,197,94,0.18)" }}
+            whileTap={{ scale: 0.97 }}
+            className="inline-flex items-center gap-2 px-8 py-3 rounded-full bg-green-600 text-white font-semibold shadow-lg hover:bg-green-700 transition-all duration-300 text-lg"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" strokeWidth={2} viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M21 8.25V19a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 19V8.25m18 0V5a2.25 2.25 0 00-2.25-2.25H5.25A2.25 2.25 0 003 5v3.25m18 0l-9 6.75-9-6.75" />
+            </svg>
+            Contact the Leadership Team
+          </motion.a>
         </div>
       </div>
     </section>

@@ -10,6 +10,7 @@ import NewsSection from '../components/NewsSection';
 import ContactSection from '../components/ContactSection';
 import PartnerModal from '../components/modals/PartnerModal';
 
+
 const HomePage: React.FC = () => {
   const [isPartnerModalOpen, setIsPartnerModalOpen] = useState(false);
   
@@ -30,7 +31,6 @@ const HomePage: React.FC = () => {
       <TechnologySection />
       <ImpactSection />
       <ImplementationSection />
-
       <PartnershipsSection />
       <SDGAlignmentSection />
       <NewsSection />
